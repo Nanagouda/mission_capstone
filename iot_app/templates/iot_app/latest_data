@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Latest Data</title>
+</head>
+<body>
+    <h1>Latest Data</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in latest_data %}
+            <tr>
+                <td>{{ data.0 }}</td>
+                <td>{{ data.1 }}</td>
+                <td>{{ data.2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

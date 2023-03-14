@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-Time Data</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            setInterval(function() {
+                $.getJSON('/realtime-data/', function(data) {
+                    var html = '';
+                    for (var i = 0; i < data.data.length; i++) {
+                        var d = data.data[i];
+                        html += '<tr><td>' + d.name + '</td><td>' + d.value + '</td><td>' + d.timestamp + '</td></tr>';
+                    }
+                    $('#realtime-data').html(html);
+                });
+            }, 5000); // Refresh every 5 seconds
+        });
+    </script>
+</head>
+<body>
+    <h1>Real-Time Data</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody id="realtime-data">
+        </tbody>
+    </table>
+</body>
+</html>

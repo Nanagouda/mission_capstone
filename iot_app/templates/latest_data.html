@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Latest Data</title>
+    <style>
+        /* Style for the table */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+        
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        tr:nth-child(even){background-color: #f2f2f2}
+        
+        /* Style for the search box */
+        .search-container {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .search-box {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            margin-right: 10px;
+        }
+        
+        .search-box input[type=text] {
+            padding: 6px;
+            border: none;
+            width: 80%;
+            margin-right: 10px;
+        }
+        
+        .search-box button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .search-box button:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <h1>Latest Data</h1>
+    
+    <!-- Search box for filtering data -->
+    <div class="search-container">
+        <div class="search-box">
+            <label for="search">Search:</label>
+            <input type="text" id="search" name="search" placeholder="Search...">
+            <button type="submit">Go</button>
+        </div>
+    </div>
+    
+    <!-- Table displaying the latest data -->
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in latest_data|slice:"10" %}
+            <tr>
+                <td>{{ data.0 }}</td>
+                <td>{{ data.1 }}</td>
+                <td>{{ data.2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <!-- Script for filtering data using the search box -->
+    <script>
+        const searchInput = document.querySelector('#search');
+        const rows = document.querySelectorAll('tbody tr');
+        
+        searchInput.addEventListener('keyup', function(event) {
+            const searchText = event.target.value.toLowerCase();
+            rows.forEach(row => {
+                const columns = row.querySelectorAll('td');
+                let found = false;
+                columns.forEach(col => {
+                    if (col.textContent.toLowerCase().includes(searchText)) {
+                        found = true;
+                    }
+                });
+                if (found) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
